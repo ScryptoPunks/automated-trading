@@ -1,9 +1,8 @@
 import os
 import json
 from time import sleep
-import requests
 import radixlib as radix
-from github import Github, InputGitTreeElement
+from github import Github
 from dotenv import load_dotenv
 from typing import List
 from tinydb import TinyDB, Query
@@ -23,8 +22,7 @@ print("Wallet address:", wallet.address)
 
 # Connect to GitHub
 g = Github(os.getenv("GITHUB_ACCESS_TOKEN"))
-# repo = g.get_repo("ScryptoPunks/database")
-repo = g.get_repo("n1pu/test")
+repo = g.get_repo("ScryptoPunks/database")
 content = repo.get_contents("database.json")
 decoded = content.decoded_content.decode()
 database = json.loads(decoded)
@@ -117,6 +115,12 @@ for tx in txs[1]:
                     # Update Github repo
                     for nonce in nonces:
                         database[nonce] = buyer
+                    repo.update_file(
+                        content.path, 
+                        f"{int(xrd_amount / 10 ** 18 / 0.9)} XRD for #{', '.join(str(nonce) for nonce in nonces)}",
+                        json.dumps(database).encode("utf-8"),
+                        content.sha
+                    )
 
                 else:
                     pending[key] = {
