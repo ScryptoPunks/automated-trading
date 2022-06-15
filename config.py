@@ -1,2 +1,5 @@
 TOKEN_RRI = "spunks_rr1qvrlq59ll3h7cercrv7vacxv9xefralues7lumkhpvjsaplxhs"
 TRADING_FEE = 0.1
+NAME = "ScryptoPunks"
+SALE_CHANNEL = 986690049183739914
+VOLUME_CHANNEL = 985125013055221760
